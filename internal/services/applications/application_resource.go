@@ -930,12 +930,19 @@ func applicationResourceCreate(ctx context.Context, d *schema.ResourceData, meta
 		if result.Application == nil {
 			return tf.ErrorDiagF(errors.New("Bad API response"), "Nil application object returned for instantiated application")
 		}
-		if result.Application.ID == nil || *result.Application.ID == "" {
-			return tf.ErrorDiagF(errors.New("Bad API response"), "Object ID returned for instantiated application is nil/empty")
+
+		//Hack to handle the different object response based on v1.0 and beta
+		if appTemplatesClient.BaseClient.ApiVersion == msgraph.VersionBeta {
+			if result.Application.ObjectID == nil || *result.Application.ObjectID == "" {
+				return tf.ErrorDiagF(errors.New("Bad API response"), "Object ID returned for instantiated application is nil/empty")
+			}
+			d.SetId(*result.Application.ObjectID)
+		} else {
+			if result.Application.ID == nil || *result.Application.ID == "" {
+				return tf.ErrorDiagF(errors.New("Bad API response"), "Object ID returned for instantiated application is nil/empty")
+			}
+			d.SetId(*result.Application.ID)
 		}
-
-		d.SetId(*result.Application.ID)
-
 		// The application was created out of band, so we'll update it just as if it was imported
 		return applicationResourceUpdate(ctx, d, meta)
 	}

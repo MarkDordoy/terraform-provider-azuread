@@ -19,7 +19,7 @@ type ApplicationTemplatesClient struct {
 // NewApplicationTemplatesClient returns a new ApplicationTemplatesClient
 func NewApplicationTemplatesClient(tenantId string) *ApplicationTemplatesClient {
 	return &ApplicationTemplatesClient{
-		BaseClient: NewClient(Version10, tenantId),
+		BaseClient: NewClient(VersionBeta, tenantId),
 	}
 }
 

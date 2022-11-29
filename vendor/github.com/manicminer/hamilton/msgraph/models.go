@@ -192,8 +192,8 @@ type AppIdentity struct {
 // Application describes an Application object.
 type Application struct {
 	DirectoryObject
-	Owners *Owners `json:"owners@odata.bind,omitempty"`
-
+	Owners                        *Owners                   `json:"owners@odata.bind,omitempty"`
+	ObjectID                      *string                   `json:"objectId,omitempty"`
 	AddIns                        *[]AddIn                  `json:"addIns,omitempty"`
 	Api                           *ApplicationApi           `json:"api,omitempty"`
 	AppId                         *string                   `json:"appId,omitempty"`
@@ -1261,6 +1261,7 @@ type ScopedRoleMembership struct {
 // ServicePrincipal describes a Service Principal object.
 type ServicePrincipal struct {
 	DirectoryObject
+	ObjectID                            *string                       `json:"objectId,omitempty"`
 	Owners                              *Owners                       `json:"owners@odata.bind,omitempty"`
 	ClaimsMappingPolicies               *[]ClaimsMappingPolicy        `json:"claimsmappingpolicies@odata.bind,omitempty"`
 	AccountEnabled                      *bool                         `json:"accountEnabled,omitempty"`
