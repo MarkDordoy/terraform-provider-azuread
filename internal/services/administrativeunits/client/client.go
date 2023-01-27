@@ -13,9 +13,11 @@ type Client struct {
 
 func NewClient(o *common.ClientOptions) *Client {
 	administrativeUnitsClient := msgraph.NewAdministrativeUnitsClient(o.TenantID)
+	administrativeUnitsClient.BaseClient.ApiVersion = msgraph.Version10
 	o.ConfigureClient(&administrativeUnitsClient.BaseClient)
 
 	directoryObjectsClient := msgraph.NewDirectoryObjectsClient(o.TenantID)
+	directoryObjectsClient.BaseClient.ApiVersion = msgraph.Version10
 	o.ConfigureClient(&directoryObjectsClient.BaseClient)
 
 	return &Client{
